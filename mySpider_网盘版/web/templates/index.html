@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>社交言论搜索系统</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+{#    <link rel="shortcut icon" href="../static/img/logo.png" type="image/x-icon">#}
+</head>
+<body>
+    <div id="app">
+        <!-- 提示信息 -->
+        <transition>
+            <!--v-if判断变脸isInfo是否为真，为真则显示进入动画-->
+            <p v-if="isInfo" class="info" v-cloak>输入用户名不能为空</p>
+        </transition>
+
+        <!-- 搜索框 -->
+        <section class="searchBox">
+            <div class="clock">
+                微博认知安全监测系统
+            </div>
+            <div class="inputBox">
+                <!--placeholder="Search" 表示在输入框没有内容时显示的提示信息。
+                v-model="queryString" 表示这个输入框的值会绑定到 Vue 实例的 queryString 属性上，
+                即当输入框的值改变时，queryString 的值也会跟着改变。v-on:keyup.enter="search" 表示当用户敲击回车键时，
+                会调用 Vue 实例的 search 方法。-->
+                <input type="text" placeholder="Search" id="searchInput" v-model="queryString" v-on:keyup.enter="search">
+                <img src="../static/img/search.png" alt="" @click="search">
+            </div>
+        </section>
+    </div>
+    <script type="text/javascript" src="https://www.ownthink.com/bot/js/robot.js?appid=xiaosi"></script>
+</body>
+<script>
+    window.onload = function(){
+        // 设置input框自动获取焦点
+        let searchInput = document.getElementById("searchInput");
+        searchInput.focus();
+    };
+</script>
+<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+<script>
+    const vm = new Vue({
+        // 这个参数用来指定Vue实例所绑定的DOM元素，即#app元素。这意味着Vue实例将控制这个元素及其所有子元素。
+        el:"#app",
+        data:{
+            queryString:"", // 查询字符串
+            isInfo:false, // 是否显示提示信息
+            infoText:"11111", // 要显示的提示信息
+        },
+        mounted() {
+        },
+        methods: {
+            // 按下enter键或点击搜索图标进行搜索
+            search:function(){
+                if(this.queryString === ""){
+                    this.infoText = "don't input empty";
+                    this.isInfo = true;
+                    let that = this;
+                    // 1200毫秒之后关闭提示信息
+                    setTimeout(function(){
+                        that.isInfo = false;
+                    }, 1200);
+                }else{
+                    //this.queryString = "";
+                    // 在当前窗口打开
+                    window.location.href = "http://127.0.0.1:8080/search.html?searchname=" + this.queryString;
+                    // 在新窗口打开
+                    //window.open("http://127.0.0.1/search.html?searchname=" + this.queryString);
+                }
+            }
+        },
+    });
+</script>
+</html>

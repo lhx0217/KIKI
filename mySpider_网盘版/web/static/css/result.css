@@ -1,0 +1,150 @@
+*{
+    padding: 0;
+    margin: 0;
+    transition: all 0.5s;
+}
+
+body{
+    /*overflow: hidden;*/
+    height: 100vh;
+}
+
+.navbar{
+    position: relative;
+    top:-25px;
+    /*由于左侧填充了10像素, 因此需要调整*/
+    width: 100vw;
+    height: 100vh;
+}
+
+#checkbox{
+    display: none;
+}
+
+.navbar label{
+    position: absolute;
+    top: 0;
+    left: 70px;
+    /*避免点击导航栏导致窗口偏移*/
+    width: calc(100vw - 70px - 23px);
+    height: 35px;
+    font-size: 30px;
+    color: #5a738e;
+    background-color: #ededed;
+    padding-left: 20px;
+    border: 1px solid #d9dee4;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.navbar ul{
+    list-style: none;
+    width: 70px;
+    height: 100vh;
+    background-color: #2a3f54;
+    transition: all 0.5s;
+    overflow: hidden;
+}
+
+.navbar ul li{
+    height: 70px;
+    margin-bottom: 10px;
+}
+
+.navbar ul li:first-child{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.navbar ul li:first-child img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.navbar ul li:first-child span{
+    color: #fff;
+    white-space: nowrap;
+    display: none;
+    padding-left: 10px;
+}
+
+.navbar ul li a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    color: #d1d1d1;
+    text-decoration: none;
+}
+
+.navbar ul li a i{
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.navbar ul li a span{
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.navbar ul li a:hover{
+    color: #fff;
+    background-color: #35495d;
+}
+/*input元素后面的兄弟元素中的第一个label元素, 动态调整label宽度*/
+.navbar input:checked + label{
+    left: 200px;
+    width: calc(100vw - 200px - 23px);
+}
+
+.navbar input:checked ~ ul{
+    width: 200px;
+}
+
+.navbar input:checked ~ ul li:first-child{
+    /*排列方式从默认的居中对齐变为左对齐。*/
+    justify-content: flex-start;
+}
+
+.navbar input:checked ~ ul li:first-child span{
+    display: block;
+}
+
+.navbar input:checked ~ ul li a{
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.navbar input:checked ~ ul li a i{
+    font-size: 18px;
+    margin: 0 15px 0 30px;
+}
+
+.navbar input:checked ~ ul li a span{
+    font-size: 14px;
+}
+
+
+.content{
+    position: absolute;
+    top: 60px;
+    left: 70px;
+    width: calc(100vw - 70px - 23px);
+    height: 43px;
+    font-size: 30px;
+    color: #5a738e;
+    padding-left: 20px;
+    background-color: #6495ED;
+    transition: all 0.5s;
+    line-height: 60px;
+    text-align: center;
+}
+/*展开之后动态调整content的宽度*/
+.navbar input:checked ~ .content{
+    left: 200px;
+    width: calc(100vw - 200px - 23px);
+}

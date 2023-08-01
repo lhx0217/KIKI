@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport"
+          content = "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
+</head>
+<body>
+    <div class="container">
+        <table>
+            <thead id="table-head">
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+    </div>
+    <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+</body>
+</html>
+
+<script>
+    $(function() {
+        // 获取指定json的路径
+        let searchname = location.search.slice(1);
+        let temp = searchname.split('=');
+        let form = document.getElementById('chart-info').innerHTML;
+        let ad = "";
+        if (form)
+            ad = "../static/json/" + temp[1] + "_" + form + ".json";
+        else
+            ad = "../static/json/" + temp[1] + ".json";
+        console.log(ad);
+    $.ajax({
+        url: ad,
+        dataType: "json",
+        success: function(data) {
+            let tableHead = $("#table-head");
+            let tableBody = $("#table-body");
+
+            // 获取data字典的键
+            const keys = Object.keys(data[0]);
+            // 写入表头
+            let header = $("<tr></tr>");
+            for (let key in keys) {
+                header.append($("<th></th>").text(keys[key]));
+            }
+            tableHead.append(header)
+            // 写入表的内容
+            $.each(data, function(index, content) {
+                let row = $("<tr></tr>");
+                for (let key in content) {
+                    let td = $("<td></td>")
+                    td.append($("<div class='td_width'></div>").text(content[key]));
+                    row.append(td);
+                }
+                tableBody.append(row);
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("读取数据失败：" + textStatus + " " + errorThrown);
+        }
+    });
+});
+</script>
